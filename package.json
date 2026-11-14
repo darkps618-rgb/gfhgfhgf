@@ -1,0 +1,41 @@
+{
+  "name": "halo-screen-recorder",
+  "productName": "Halo",
+  "version": "2.0.0",
+  "description": "Halo – screen recorder, webcam overlay and live streaming",
+  "main": "main.js",
+  "author": "Halo",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --x64"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.halo.screenrecorder",
+    "productName": "Halo",
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["main.js", "preload.js", "renderer/**/*", "package.json"],
+    "asarUnpack": ["node_modules/ffmpeg-static/**"],
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "artifactName": "Halo-Setup-${version}.${ext}"
+    },
+    "portable": { "artifactName": "Halo-Portable-${version}.${ext}" }
+  }
+}
